@@ -55,6 +55,10 @@ class App extends Component {
       return <div>Loading...</div>;
     }
     else {
+      //the mocky sample api response is missing the 6th year of national trend data
+      //Kaleb said just make one up so the following line adds it
+      responseData.trend_comparison.nation.push(331572);
+
       return (
         <>
         <Container>
