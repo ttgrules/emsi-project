@@ -8,7 +8,23 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import {Line} from 'react-chartjs-2';
 
+import NumberComma from './number-comma';
+
+
 const Trend = ({trend_comparison}) => {
+
+  //calculate start-end year percent changes
+  var regional_start = parseInt(trend_comparison.regional[0]);
+  var regional_end = parseInt(trend_comparison.regional[trend_comparison.regional.length-1]);
+  var regional_change_percent = Math.round((regional_end-regional_start)/regional_start*1000)/10; //cheap way to get 1 decimal place rounded
+
+  var state_start = parseInt(trend_comparison.state[0]);
+  var state_end = parseInt(trend_comparison.state[trend_comparison.state.length-1]);
+  var state_change_percent = Math.round((state_end-state_start)/state_start*1000)/10; //cheap way to get 1 decimal place rounded
+
+  var nation_start = parseInt(trend_comparison.nation[0]);
+  var nation_end = parseInt(trend_comparison.nation[trend_comparison.nation.length-1]);
+  var nation_change_percent = Math.round((nation_end-nation_start)/nation_start*1000)/10; //cheap way to get 1 decimal place rounded
 
   const regional_color = '#1c008a';
   const state_color = '#1c77ff';
@@ -79,9 +95,9 @@ const Trend = ({trend_comparison}) => {
       var last_regional = parseInt(trend_comparison.regional[j-1]);
       var last_state = parseInt(trend_comparison.state[j-1]);
       var last_nation = parseInt(trend_comparison.nation[j-1]);
-      regional.data.push((this_regional-last_regional)/last_regional*100);
-      state.data.push((this_state-last_state)/last_state*100);
-      nation.data.push((this_nation-last_nation)/last_nation*100);
+      regional.data.push(Math.round((this_regional-last_regional)/last_regional*1000)/10);
+      state.data.push(Math.round((this_state-last_state)/last_state*1000)/10);
+      nation.data.push(Math.round((this_nation-last_nation)/last_nation*1000)/10);
     }
     j++;
   }
@@ -105,13 +121,39 @@ const Trend = ({trend_comparison}) => {
           <thead>
             <tr>
               <th scope="col"></th>
-              <th scope="col">Region</th>
+              <th scope="col" className="w-50">Region</th>
               <th scope="col">{trend_comparison.start_year} Jobs</th>
               <th scope="col">{trend_comparison.end_year} Jobs</th>
               <th scope="col">Change</th>
               <th scope="col">% Change</th>
             </tr>
           </thead>
+          <tbody>
+            <tr>
+              <td></td>
+              <td>Region</td>
+              <td><NumberComma number={regional_start} decimals={0} /></td>
+              <td><NumberComma number={regional_end} decimals={0} /></td>
+              <td><NumberComma number={regional_end-regional_start} decimals={0} /></td>
+              <td>{regional_change_percent}%</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td>State</td>
+              <td><NumberComma number={state_start} decimals={0} /></td>
+              <td><NumberComma number={state_end} decimals={0} /></td>
+              <td><NumberComma number={state_end-state_start} decimals={0} /></td>
+              <td>{state_change_percent}%</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td>Nation</td>
+              <td><NumberComma number={nation_start} decimals={0} /></td>
+              <td><NumberComma number={nation_end} decimals={0} /></td>
+              <td><NumberComma number={nation_end-nation_start} decimals={0} /></td>
+              <td>{nation_change_percent}%</td>
+            </tr>
+          </tbody>
         </table>
       </Col>
     </Row>
