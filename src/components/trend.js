@@ -9,6 +9,9 @@ import Button from 'react-bootstrap/Button';
 import {Line} from 'react-chartjs-2';
 
 import NumberComma from './number-comma';
+import IconSquare from './iconsquare';
+import IconDot from './icondot';
+import IconTriangle from './icontriangle';
 
 
 const Trend = ({trend_comparison}) => {
@@ -36,6 +39,11 @@ const Trend = ({trend_comparison}) => {
     },
     scales: {
       yAxes: [{
+        ticks: {
+          suggestedMin: -5,
+          suggestedMax: 15,
+          stepSize: 1
+        },
         scaleLabel: {
           display:true,
           labelString: "Percent Change"
@@ -95,9 +103,9 @@ const Trend = ({trend_comparison}) => {
       var last_regional = parseInt(trend_comparison.regional[j-1]);
       var last_state = parseInt(trend_comparison.state[j-1]);
       var last_nation = parseInt(trend_comparison.nation[j-1]);
-      regional.data.push(Math.round((this_regional-last_regional)/last_regional*1000)/10);
-      state.data.push(Math.round((this_state-last_state)/last_state*1000)/10);
-      nation.data.push(Math.round((this_nation-last_nation)/last_nation*1000)/10);
+      regional.data.push(Math.round((this_regional-regional_start)/regional_start*1000)/10);
+      state.data.push(Math.round((this_state-state_start)/state_start*1000)/10);
+      nation.data.push(Math.round((this_nation-nation_start)/nation_start*1000)/10);
     }
     j++;
   }
@@ -117,7 +125,7 @@ const Trend = ({trend_comparison}) => {
     </Row>
     <Row className="mb-5">
       <Col>
-        <table className="table table-hover table-responsive-md">
+        <table className="table table-hover table-responsive-lg">
           <thead>
             <tr>
               <th scope="col"></th>
@@ -125,12 +133,12 @@ const Trend = ({trend_comparison}) => {
               <th scope="col">{trend_comparison.start_year} Jobs</th>
               <th scope="col">{trend_comparison.end_year} Jobs</th>
               <th scope="col">Change</th>
-              <th scope="col">% Change</th>
+              <th scope="col">%&nbsp;Change</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td></td>
+              <td className="text-center align-middle"><IconDot className="icon_svg" radius={7.5} color={regional_color} /></td>
               <td>Region</td>
               <td><NumberComma number={regional_start} decimals={0} /></td>
               <td><NumberComma number={regional_end} decimals={0} /></td>
@@ -138,7 +146,7 @@ const Trend = ({trend_comparison}) => {
               <td>{regional_change_percent}%</td>
             </tr>
             <tr>
-              <td></td>
+              <td className="text-center align-middle"><IconSquare className="icon_svg" size={15} color={state_color} /></td>
               <td>State</td>
               <td><NumberComma number={state_start} decimals={0} /></td>
               <td><NumberComma number={state_end} decimals={0} /></td>
@@ -146,7 +154,7 @@ const Trend = ({trend_comparison}) => {
               <td>{state_change_percent}%</td>
             </tr>
             <tr>
-              <td></td>
+              <td className="text-center align-middle"><IconTriangle className="icon_svg" size={15} color={nation_color} /></td>
               <td>Nation</td>
               <td><NumberComma number={nation_start} decimals={0} /></td>
               <td><NumberComma number={nation_end} decimals={0} /></td>

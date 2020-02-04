@@ -56,8 +56,10 @@ class App extends Component {
     }
     else {
       //the mocky sample api response is missing the 6th year of national trend data
-      //Kaleb said just make one up so the following line adds it
-      responseData.trend_comparison.nation.push(331572);
+      //Kaleb said just make one up so the following lines adds it if it is missing
+      if(responseData.trend_comparison.nation.length < responseData.trend_comparison.regional.length) {
+        responseData.trend_comparison.nation.push(331572);
+      }
 
       return (
         <>
