@@ -3,3 +3,16 @@
   width:auto;
   margin-bottom:10%;
 }
+
+.industry_bar {
+  position:absolute;
+  top:0px;
+  left:0px;
+  height:100%;
+  z-index:-1;
+  background-color:#cce5ff;
+}
+
+.parent_td {
+  position:relative;
+}

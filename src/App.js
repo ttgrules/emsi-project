@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 
-import Jumbotron from 'react-bootstrap/Jumbotron';
-import Toast from 'react-bootstrap/Toast';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Button from 'react-bootstrap/Button';
+import Jumbotron from 'react-bootstrap/Jumbotron';
 
 import Summary from './components/summary';
 import Trend from './components/trend';
+import Industries from './components/industries';
 
 import './App.css';
 
@@ -49,10 +47,23 @@ class App extends Component {
     const {responseData, isLoaded, error} = this.state;
 
     if(error) {
-      return <div> Error: {error.message}</div>
+      return (
+        <Container>
+          <Jumbotron className="text-center mt-5 bg-danger">
+            <h1 className="display-4">Error!</h1>
+            {error.message}
+          </Jumbotron>
+        </Container>
+      );
     }
     else if (!isLoaded) {
-      return <div>Loading...</div>;
+      return (
+        <Container>
+          <Jumbotron className="text-center mt-5">
+            <h1 className="display-4">Loading...</h1>
+          </Jumbotron>
+        </Container>
+      );
     }
     else {
       //the mocky sample api response is missing the 6th year of national trend data
@@ -75,7 +86,12 @@ class App extends Component {
           <Row>
             <h3>Regional Trends</h3>
           </Row>
+          <hr />
           <Trend trend_comparison={responseData.trend_comparison}/>
+          <Row>
+            <h3>Industries Employing {responseData.occupation.title}</h3>
+          </Row>
+          <Industries employing_industries={responseData.employing_industries}/>
         </Container>
         </>
       );

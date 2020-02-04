@@ -1,11 +1,7 @@
 import React from 'react';
 
-import Jumbotron from 'react-bootstrap/Jumbotron';
-import Toast from 'react-bootstrap/Toast';
-import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Button from 'react-bootstrap/Button';
 import {Line} from 'react-chartjs-2';
 
 import NumberComma from './number-comma';
@@ -17,23 +13,23 @@ import IconTriangle from './icontriangle';
 const Trend = ({trend_comparison}) => {
 
   //calculate start-end year percent changes
-  var regional_start = parseInt(trend_comparison.regional[0]);
-  var regional_end = parseInt(trend_comparison.regional[trend_comparison.regional.length-1]);
-  var regional_change_percent = Math.round((regional_end-regional_start)/regional_start*1000)/10; //cheap way to get 1 decimal place rounded
+  const regional_start = parseInt(trend_comparison.regional[0]);
+  const regional_end = parseInt(trend_comparison.regional[trend_comparison.regional.length-1]);
+  const regional_change_percent = Math.round((regional_end-regional_start)/regional_start*1000)/10; //cheap way to get 1 decimal place rounded
 
-  var state_start = parseInt(trend_comparison.state[0]);
-  var state_end = parseInt(trend_comparison.state[trend_comparison.state.length-1]);
-  var state_change_percent = Math.round((state_end-state_start)/state_start*1000)/10; //cheap way to get 1 decimal place rounded
+  const state_start = parseInt(trend_comparison.state[0]);
+  const state_end = parseInt(trend_comparison.state[trend_comparison.state.length-1]);
+  const state_change_percent = Math.round((state_end-state_start)/state_start*1000)/10; //cheap way to get 1 decimal place rounded
 
-  var nation_start = parseInt(trend_comparison.nation[0]);
-  var nation_end = parseInt(trend_comparison.nation[trend_comparison.nation.length-1]);
-  var nation_change_percent = Math.round((nation_end-nation_start)/nation_start*1000)/10; //cheap way to get 1 decimal place rounded
+  const nation_start = parseInt(trend_comparison.nation[0]);
+  const nation_end = parseInt(trend_comparison.nation[trend_comparison.nation.length-1]);
+  const nation_change_percent = Math.round((nation_end-nation_start)/nation_start*1000)/10; //cheap way to get 1 decimal place rounded
 
   const regional_color = '#1c008a';
   const state_color = '#1c77ff';
   const nation_color = '#33ccff';
 
-  var options = {
+  const options = {
     legend: {
       display: false
     },
@@ -41,7 +37,7 @@ const Trend = ({trend_comparison}) => {
       yAxes: [{
         ticks: {
           suggestedMin: -5,
-          suggestedMax: 15,
+          suggestedMax: 10,
           stepSize: 1
         },
         scaleLabel: {
@@ -94,7 +90,7 @@ const Trend = ({trend_comparison}) => {
     var this_state = parseInt(trend_comparison.state[j]);
     var this_nation = parseInt(trend_comparison.nation[j]);
     labels.push(i);
-    if(j==0) {
+    if(j===0) {
       regional.data.push(0);
       state.data.push(0);
       nation.data.push(0);
@@ -103,9 +99,9 @@ const Trend = ({trend_comparison}) => {
       var last_regional = parseInt(trend_comparison.regional[j-1]);
       var last_state = parseInt(trend_comparison.state[j-1]);
       var last_nation = parseInt(trend_comparison.nation[j-1]);
-      regional.data.push(Math.round((this_regional-regional_start)/regional_start*1000)/10);
-      state.data.push(Math.round((this_state-state_start)/state_start*1000)/10);
-      nation.data.push(Math.round((this_nation-nation_start)/nation_start*1000)/10);
+      regional.data.push(Math.round((this_regional-last_regional)/last_regional*1000)/10);
+      state.data.push(Math.round((this_state-last_state)/last_state*1000)/10);
+      nation.data.push(Math.round((this_nation-last_nation)/last_nation*1000)/10);
     }
     j++;
   }
@@ -133,7 +129,7 @@ const Trend = ({trend_comparison}) => {
               <th scope="col">{trend_comparison.start_year} Jobs</th>
               <th scope="col">{trend_comparison.end_year} Jobs</th>
               <th scope="col">Change</th>
-              <th scope="col">%&nbsp;Change</th>
+              <th scope="col" className='text-nowrap'>% Change</th>
             </tr>
           </thead>
           <tbody>

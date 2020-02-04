@@ -6,7 +6,7 @@ const IconSquare = ({size,color,className}) => {
     strokeWidth:0
   }
   return (
-    <svg class={className} width={size} height={size}>
+    <svg className={className} width={size} height={size}>
       <rect width={size} height={size} style={rect_style} />
     </svg>
   );
