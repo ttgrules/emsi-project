@@ -32,6 +32,7 @@ class App extends Component {
           error: null
         });
       },
+      //catch request errors
       (error) => {
         this.setState({
           responseData: [],
