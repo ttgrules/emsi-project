@@ -1,7 +1,7 @@
-#John Hunt's Interview Project for Emsi
+# John Hunt's Interview Project for Emsi
 This project uses a sample Emsi api call to render a report page. It is written in react, with Chart.js for charts and react-bootstrap as it's css-framework.
 
-#Setup
+# Setup
 This project requires Node.js to build properly
 
 ```
