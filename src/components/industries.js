@@ -58,20 +58,6 @@ class Industries extends Component {
 
     }
 
-    //after running this code, I figured out that for display purposes
-    //you want the largest percentage to take up about 75% of the first cell,
-    //so we create a modifier of 75-largest_percent (if it's smaller than 75%)
-    //and add that for the width percentage
-    var percent_modifier = 0;
-    if(biggest_percentage < 75) percent_modifier=75-biggest_percentage;
-
-    //now run through and create modified values for bar chart
-
-    for(i=0;i<parsed_industries.length;i++) {
-      parsed_industries[i].bar_percent = parsed_industries[i].percent_in_industry+percent_modifier;
-    }
-
-
     parsed_industries.sort(this.industry_compare);
 
     return (
